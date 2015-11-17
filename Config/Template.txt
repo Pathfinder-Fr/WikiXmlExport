@@ -1,0 +1,12 @@
+﻿<?xml version="1.0"?>
+<wikiPage>
+  <title>{1}</title>
+  <categories>{2}</categories>
+  <lastModified>{5}</lastModified>
+  <version>{6}</version>
+  <inLinks>{3}</inLinks>
+  <outLinks>{4}</outLinks>
+  <body><![CDATA[{7}]]></body>
+  <raw><![CDATA[{8}]]></raw>
+  <fullName>{9}</fullName>
+</wikiPage>

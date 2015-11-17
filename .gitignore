@@ -1,0 +1,12 @@
+# items
+In/
+Out/
+
+# build
+build.log
+artifacts/
+
+# VS
+[bB]in/
+[oO]bj/
+*.user

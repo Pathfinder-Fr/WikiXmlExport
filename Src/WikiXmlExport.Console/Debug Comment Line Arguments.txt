@@ -1,0 +1,7 @@
+﻿export :
+
+Export /ptrn:++Pathfinder-RPG /out:.\Out /tmpl:.\Config\template.xml /basedir:..\..\..\..\
+
+applysnippets
+
+ApplySnippets /basedir:..\..\..\..\

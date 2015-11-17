@@ -1,0 +1,2 @@
+robocopy ..\..\..\..\ScrewTurnWiki\WebApplication\bin . "ScrewTurn.Wiki.AclEngine.*" "ScrewTurn.Wiki.Core.*" "ScrewTurn.Wiki.PluginFramework.*" "ScrewTurn.Wiki.SearchEngine.*"
+robocopy ..\..\..\..\ScrewTurnWiki\WebApplication\public\Plugins . "SqlServerProviders.*"

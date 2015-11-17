@@ -1,0 +1,386 @@
+Index: Core/Host.cs
+===================================================================
+--- Core/Host.cs	(revision 2933)
++++ Core/Host.cs	(working copy)
+@@ -12,12 +12,13 @@
+ 	/// </summary>
+ 	public class Host : IHostV30 {
+ 
+-		private static Host instance;
++        private static IHostV30 instance;
+ 
+ 		/// <summary>
+ 		/// Gets or sets the singleton instance of the <b>Host</b> object.
+ 		/// </summary>
+-		public static Host Instance {
++        public static IHostV30 Instance
++        {
+ 			get {
+ 				if(instance == null) throw new InvalidOperationException("Host.Instance is null");
+ 				return instance;
+@@ -969,49 +970,4 @@
+ 
+ 	}
+ 
+-	/// <summary>
+-	/// Represents a custom toolbar item.
+-	/// </summary>
+-	public class CustomToolbarItem {
+-
+-		private ToolbarItem item;
+-		private string text, value;
+-
+-		/// <summary>
+-		/// Initializes a new instance of the <b>ToolbarItem</b> class.
+-		/// </summary>
+-		/// <param name="item">The item.</param>
+-		/// <param name="text">The text.</param>
+-		/// <param name="value">The value.</param>
+-		public CustomToolbarItem(ToolbarItem item, string text, string value) {
+-			this.item = item;
+-			this.text = text;
+-			this.value = value;
+-		}
+-
+-		/// <summary>
+-		/// Gets or sets the item.
+-		/// </summary>
+-		public ToolbarItem Item {
+-			get { return item; }
+-			set { item = value; }
+-		}
+-
+-		/// <summary>
+-		/// Gets the text.
+-		/// </summary>
+-		public string Text {
+-			get { return text; }
+-		}
+-
+-		/// <summary>
+-		/// Gets or sets the value.
+-		/// </summary>
+-		public string Value {
+-			get { return value; }
+-			set { this.value = value; }
+-		}
+-
+-	}
+-
+ }
+Index: Core/PagesStorageProvider.cs
+===================================================================
+--- Core/PagesStorageProvider.cs	(revision 2933)
++++ Core/PagesStorageProvider.cs	(working copy)
+@@ -2071,19 +2071,24 @@
+ 
+ 					int idx = GetIndex(pages, page.FullName);
+ 
+-					if(idx != -1) pages.Remove(pages[idx]);
+-					cats[i].Pages = pages.ToArray();
++                    if (idx != -1) {
++                        pages.Remove(pages[idx]);
++                        pages.Sort(StringComparer.OrdinalIgnoreCase);
++                        cats[i].Pages = pages.ToArray();
++                    }
+ 				}
+ 
+ 				for(int i = 0; i < cats.Length; i++) {
+ 					for(int k = 0; k < categories.Length; k++) {
+ 						if(catComp.Compare(cats[i], new CategoryInfo(categories[k], this)) == 0) {
+ 							pages = new List<string>(cats[i].Pages);
+-							pages.Add(page.FullName);
++                            pages.Add(page.FullName);
++                            pages.Sort(StringComparer.OrdinalIgnoreCase);
+ 							cats[i].Pages = pages.ToArray();
+ 						}
+ 					}
+ 				}
++
+ 				DumpCategories(cats);
+ 				pagesCache = null;
+ 				categoriesCache = null;
+Index: Core/Tools.cs
+===================================================================
+--- Core/Tools.cs	(revision 2933)
++++ Core/Tools.cs	(working copy)
+@@ -583,7 +583,6 @@
+ 
+ 			return buffer.ToString();
+ 		}
+-
+ 	}
+ 
+ 	/// <summary>
+Index: PluginFramework/CustomToolbarItem.cs
+===================================================================
+--- PluginFramework/CustomToolbarItem.cs	(revision 0)
++++ PluginFramework/CustomToolbarItem.cs	(revision 0)
+@@ -0,0 +1,57 @@
++﻿using System;
++using System.Collections.Generic;
++using System.Linq;
++using System.Text;
++
++namespace ScrewTurn.Wiki.PluginFramework
++{
++    /// <summary>
++    /// Represents a custom toolbar item.
++    /// </summary>
++    public class CustomToolbarItem
++    {
++
++        private ToolbarItem item;
++        private string text, value;
++
++        /// <summary>
++        /// Initializes a new instance of the <b>ToolbarItem</b> class.
++        /// </summary>
++        /// <param name="item">The item.</param>
++        /// <param name="text">The text.</param>
++        /// <param name="value">The value.</param>
++        public CustomToolbarItem(ToolbarItem item, string text, string value)
++        {
++            this.item = item;
++            this.text = text;
++            this.value = value;
++        }
++
++        /// <summary>
++        /// Gets or sets the item.
++        /// </summary>
++        public ToolbarItem Item
++        {
++            get { return item; }
++            set { item = value; }
++        }
++
++        /// <summary>
++        /// Gets the text.
++        /// </summary>
++        public string Text
++        {
++            get { return text; }
++        }
++
++        /// <summary>
++        /// Gets or sets the value.
++        /// </summary>
++        public string Value
++        {
++            get { return value; }
++            set { this.value = value; }
++        }
++
++    }
++}
+Index: PluginFramework/IHost.cs
+===================================================================
+--- PluginFramework/IHost.cs	(revision 2933)
++++ PluginFramework/IHost.cs	(working copy)
+@@ -12,6 +12,11 @@
+ 	/// </summary>
+ 	public interface IHostV30 {
+ 
++        /// <summary>
++		/// Gets the Special Tags added by providers.
++		/// </summary>
++        Dictionary<string, CustomToolbarItem> CustomSpecialTags { get; }
++
+ 		/// <summary>
+ 		/// Gets the values of the Wiki Settings.
+ 		/// </summary>
+@@ -426,8 +431,66 @@
+ 		/// <summary>
+ 		/// Event fired whenever an activity is performed on a file, directory or attachment.
+ 		/// </summary>
+-		event EventHandler<FileActivityEventArgs> FileActivity;
++		event EventHandler<FileActivityEventArgs> FileActivity;        
+ 
++		/// <summary>
++		/// Fires the FileActivity event.
++		/// </summary>
++		/// <param name="provider">The provider that handles the attachment.</param>
++		/// <param name="attachment">The old name of the renamed attachment, if any.</param>
++		/// <param name="page">The page that owns the attachment.</param>
++		/// <param name="oldAttachmentName">The old name of the renamed attachment, if any.</param>
++		/// <param name="activity">The activity.</param>
++        void OnAttachmentActivity(string provider, string attachment, string page, string oldAttachmentName, FileActivity activity);
++
++		/// <summary>
++		/// Fires the FileActivity event.
++		/// </summary>
++		/// <param name="provider">The provider that handles the directory.</param>
++		/// <param name="directory">The directory that changed.</param>
++		/// <param name="oldDirectoryName">The old name of the renamed directory, if any.</param>
++		/// <param name="activity">The activity.</param>
++        void OnDirectoryActivity(string provider, string directory, string oldDirectoryName, FileActivity activity);
++
++		/// <summary>
++		/// Fires the FileActivity event.
++		/// </summary>
++		/// <param name="provider">The provider that handles the file.</param>
++		/// <param name="file">The name of the file that changed.</param>
++		/// <param name="oldFileName">The old name of the renamed file, if any.</param>
++		/// <param name="activity">The activity.</param>
++        void OnFileActivity(string provider, string file, string oldFileName, FileActivity activity);
++
++		/// <summary>
++		/// Fires the PageActivity event.
++		/// </summary>
++		/// <param name="page">The page the activity refers to.</param>
++		/// <param name="pageOldName">The old name of the renamed page, or <c>null</c>.</param>
++		/// <param name="author">The author of the activity.</param>
++		/// <param name="activity">The activity.</param>
++        void OnPageActivity(PageInfo page, string pageOldName, string author, PageActivity activity);
++
++		/// <summary>
++		/// Fires the NamespaceActivity event.
++		/// </summary>
++		/// <param name="nspace">The namespace the activity refers to.</param>
++		/// <param name="nspaceOldName">The old name of the renamed namespace, or <c>null</c>.</param>
++		/// <param name="activity">The activity.</param>
++        void OnNamespaceActivity(NamespaceInfo nspace, string nspaceOldName, NamespaceActivity activity);
++
++		/// <summary>
++		/// Fires the UserAccountActivity event.
++		/// </summary>
++		/// <param name="user">The user the activity refers to.</param>
++		/// <param name="activity">The activity.</param>
++        void OnUserAccountActivity(UserInfo user, UserAccountActivity activity);
++
++		/// <summary>
++		/// Fires the UserGroupActivity event.
++		/// </summary>
++		/// <param name="group">The group the activity refers to.</param>
++		/// <param name="activity">The activity.</param>
++        void OnUserGroupActivity(UserGroup group, UserGroupActivity activity);
+ 	}
+ 
+ 	/// <summary>
+Index: PluginFramework/PageInfo.cs
+===================================================================
+--- PluginFramework/PageInfo.cs	(revision 2933)
++++ PluginFramework/PageInfo.cs	(working copy)
+@@ -32,26 +32,46 @@
+ 		/// </summary>
+ 		protected DateTime creationDateTime;
+ 
++        /// <summary>
++        /// The full name of the page without accentued characters.
++        /// </summary>
++        protected string sortName;
++
+ 		/// <summary>
+ 		/// Initializes a new instance of the <see cref="T:PageInfo" /> class.
+ 		/// </summary>
+ 		/// <param name="fullName">The Full Name of the Page.</param>
+ 		/// <param name="provider">The Pages Storage Provider that manages this Page.</param>
+ 		/// <param name="creationDateTime">The Page creation Date/Time.</param>
+-		public PageInfo(string fullName, IPagesStorageProviderV30 provider, DateTime creationDateTime) {
+-			NameTools.ExpandFullName(fullName, out nspace, out name);
+-			this.provider = provider;
+-			this.creationDateTime = creationDateTime;
+-		}
++        public PageInfo(string fullName, IPagesStorageProviderV30 provider, DateTime creationDateTime)
++        {
++            NameTools.ExpandFullName(fullName, out nspace, out name);
++            this.provider = provider;
++            this.creationDateTime = creationDateTime;
+ 
++            SetSortName(fullName);
++        }
++
+ 		/// <summary>
+ 		/// Gets or sets the full name of the Page, such as 'Namespace.Page' or 'Page'.
+ 		/// </summary>
+ 		public string FullName {
+ 			get { return NameTools.GetFullName(nspace, name); }
+-			set { NameTools.ExpandFullName(value, out nspace, out name); }
++            set
++            {
++                NameTools.ExpandFullName(value, out nspace, out name);
++                this.SetSortName(value);
++            }
+ 		}
+ 
++        /// <summary>
++        /// Gets the full name which can be used to sort the pages (accentued characters are removed)
++        /// </summary>
++        public string SortFullName
++        {
++            get { return this.sortName; }
++        }
++
+ 		/// <summary>
+ 		/// Gets or sets the Pages Storage Provider.
+ 		/// </summary>
+@@ -84,8 +104,25 @@
+ 			string result = NameTools.GetFullName(nspace, name);
+ 			result += " [" + provider.Information.Name + "]";
+ 			return result;
+-		}
++        }
+ 
++        private void SetSortName(string fullName)
++        {
++            string normalizedString = fullName.Normalize(NormalizationForm.FormD);
++            StringBuilder stringBuilder = new StringBuilder();
++
++            for (int i = 0; i < normalizedString.Length; i++)
++            {
++                char c = normalizedString[i];
++                if (CharUnicodeInfo.GetUnicodeCategory(c) != UnicodeCategory.NonSpacingMark)
++                {
++                    stringBuilder.Append(c);
++                }
++            }
++
++            this.sortName = stringBuilder.ToString();
++        }
++
+ 	}
+ 
+ 	/// <summary>
+Index: PluginFramework/PluginFramework.csproj
+===================================================================
+--- PluginFramework/PluginFramework.csproj	(revision 2933)
++++ PluginFramework/PluginFramework.csproj	(working copy)
+@@ -60,6 +60,7 @@
+     <Compile Include="ComponentInformation.cs" />
+     <Compile Include="ContentTemplate.cs" />
+     <Compile Include="ContextInformation.cs" />
++    <Compile Include="CustomToolbarItem.cs" />
+     <Compile Include="Exchanger.cs" />
+     <Compile Include="FileActivityEventArgs.cs" />
+     <Compile Include="FileDetails.cs" />
+Index: WebApplication/AllPages.aspx.cs
+===================================================================
+--- WebApplication/AllPages.aspx.cs	(revision 2933)
++++ WebApplication/AllPages.aspx.cs	(working copy)
+@@ -4,6 +4,7 @@
+ using System.Configuration;
+ using System.Collections;
+ using System.Collections.Generic;
++using System.Linq;
+ using System.Web;
+ using System.Web.Security;
+ using System.Web.UI;
+@@ -21,7 +22,7 @@
+ 		/// <summary>
+ 		/// The number of items in a page.
+ 		/// </summary>
+-		public const int PageSize = 50;
++		public const int PageSize = 10;
+ 
+ 		private int selectedPage = 0;
+ 		private int rangeBegin = 0;
+@@ -45,7 +46,7 @@
+ 				lnkCategories.NavigateUrl = UrlTools.BuildUrl("Category.aspx");
+ 				lnkSearch.NavigateUrl = UrlTools.BuildUrl("Search.aspx");
+ 
+-				currentPages = GetAllPages();
++				currentPages = GetAllPages().OrderBy(pa => pa.SortFullName).ToList();
+ 				pageSelector.ItemCount = currentPages.Count;
+ 				pageSelector.PageSize = PageSize;
+ 
