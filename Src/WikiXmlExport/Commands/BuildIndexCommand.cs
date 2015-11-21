@@ -2,7 +2,7 @@
 using System.Xml;
 using ScrewTurn.Wiki.PluginFramework;
 
-namespace PathfinderFr.WikiXmlExport.Commands
+namespace WikiXmlExport.Commands
 {
     public class BuildIndexCommand : CommandBase
     {

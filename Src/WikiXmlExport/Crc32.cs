@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Security.Cryptography;
 
-namespace PathfinderFr.WikiXmlExport
+namespace WikiXmlExport
 {
     public class Crc32 : HashAlgorithm
     {

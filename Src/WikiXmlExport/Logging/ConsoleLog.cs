@@ -1,4 +1,4 @@
-﻿namespace PathfinderFr.WikiXmlExport.Logging
+﻿namespace WikiXmlExport.Logging
 {
     using System;
 

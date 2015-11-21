@@ -1,4 +1,4 @@
-﻿namespace PathfinderFr.WikiXmlExport
+﻿namespace WikiXmlExport
 {
     public static class ILogExtensions
     {

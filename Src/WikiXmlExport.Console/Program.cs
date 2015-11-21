@@ -1,9 +1,9 @@
-﻿namespace PathfinderFr.WikiXmlExport.Console
+﻿namespace WikiXmlExport.Console
 {
     using System.Configuration;
     using System.IO;
     using System.Web;
-    using PathfinderFr.WikiXmlExport.Commands;
+    using WikiXmlExport.Commands;
 
     class Program
     {

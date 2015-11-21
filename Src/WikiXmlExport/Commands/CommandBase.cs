@@ -1,4 +1,4 @@
-﻿namespace PathfinderFr.WikiXmlExport.Commands
+﻿namespace WikiXmlExport.Commands
 {
     using System;
     using System.Collections.Concurrent;

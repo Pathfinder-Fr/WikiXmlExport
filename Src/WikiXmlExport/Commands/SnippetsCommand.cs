@@ -2,7 +2,7 @@
 using ScrewTurn.Wiki;
 using ScrewTurn.Wiki.Plugins.SqlServer;
 
-namespace PathfinderFr.WikiXmlExport.Commands
+namespace WikiXmlExport.Commands
 {
     public class SnippetsCommand
     {

@@ -3,7 +3,7 @@ using ScrewTurn.Wiki;
 using ScrewTurn.Wiki.PluginFramework;
 using System.Configuration;
 
-namespace PathfinderFr.WikiXmlExport
+namespace WikiXmlExport
 {
     public static class ScrewTurnContext
     {

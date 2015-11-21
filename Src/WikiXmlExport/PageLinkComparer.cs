@@ -1,4 +1,4 @@
-﻿namespace PathfinderFr.WikiXmlExport
+﻿namespace WikiXmlExport
 {
     using System;
     using System.Collections.Generic;

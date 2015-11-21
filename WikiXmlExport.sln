@@ -3,14 +3,14 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WikiXmlExport", "WikiXmlExport\WikiXmlExport.csproj", "{CD7F338A-ADE0-4DAC-89D8-9AE309780783}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WikiXmlExport", "src\WikiXmlExport\WikiXmlExport.csproj", "{CD7F338A-ADE0-4DAC-89D8-9AE309780783}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WikiXmlExport.Console", "WikiXmlExport.Console\WikiXmlExport.Console.csproj", "{AF2E7978-EC4A-4682-8EF2-1F9EBB95254E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WikiXmlExport.Console", "src\WikiXmlExport.Console\WikiXmlExport.Console.csproj", "{AF2E7978-EC4A-4682-8EF2-1F9EBB95254E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{30EA703B-DC23-4CFE-9265-880369329ED0}"
 	ProjectSection(SolutionItems) = preProject
-		..\readme.txt = ..\readme.txt
-		..\Config\Template.txt = ..\Config\Template.txt
+		readme.txt = readme.txt
+		Config\Template.txt = Config\Template.txt
 	EndProjectSection
 EndProject
 Global

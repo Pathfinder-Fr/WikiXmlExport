@@ -8,8 +8,8 @@
     <ProjectGuid>{CD7F338A-ADE0-4DAC-89D8-9AE309780783}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PathfinderFr.WikiXmlExport</RootNamespace>
-    <AssemblyName>PathfinderFr.WikiXmlExport</AssemblyName>
+    <RootNamespace>WikiXmlExport</RootNamespace>
+    <AssemblyName>WikiXmlExport</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />

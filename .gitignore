@@ -10,3 +10,4 @@ artifacts/
 [bB]in/
 [oO]bj/
 *.user
+.vs/

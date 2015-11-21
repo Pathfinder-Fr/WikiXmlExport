@@ -8,7 +8,7 @@ using System.IO;
 using AclEngine = ScrewTurn.Wiki.AclEngine;
 using System.Diagnostics;
 
-namespace PathfinderFr.WikiXmlExport
+namespace WikiXmlExport
 {
     public class ConsoleSettingsStorageProvider : ISettingsStorageProviderV30
     {

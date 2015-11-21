@@ -8,7 +8,7 @@
     <ProjectGuid>{AF2E7978-EC4A-4682-8EF2-1F9EBB95254E}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PathfinderFr.WikiXmlExport</RootNamespace>
+    <RootNamespace>WikiXmlExport</RootNamespace>
     <AssemblyName>WikiXmlExport</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>

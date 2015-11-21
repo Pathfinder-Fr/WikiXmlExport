@@ -1,4 +1,4 @@
-﻿namespace PathfinderFr.WikiXmlExport.Logging
+﻿namespace WikiXmlExport.Logging
 {
     public abstract class LogBase
     {

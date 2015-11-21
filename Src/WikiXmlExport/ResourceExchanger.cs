@@ -1,7 +1,7 @@
 ﻿using System.Resources;
 using ScrewTurn.Wiki;
 
-namespace PathfinderFr.WikiXmlExport
+namespace WikiXmlExport
 {
     /// <summary>
     /// Implements a Resource Exchanger.

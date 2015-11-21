@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace PathfinderFr.WikiXmlExport.Console
+namespace WikiXmlExport.Console
 {
     public static class ArrayExtensions
     {

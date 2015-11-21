@@ -5,7 +5,7 @@ using System.Text;
 using ScrewTurn.Wiki.PluginFramework;
 using ScrewTurn.Wiki;
 
-namespace PathfinderFr.WikiXmlExport
+namespace WikiXmlExport
 {
     public class ConsoleHost : IHostV30
     {
